@@ -161,7 +161,9 @@ public class Robot extends TimedRobot implements RobotMap, ControlMap {
     System.out.println("Shooter Speed: " + SmartDashboard.getNumber("Shooter Spd", 0.0));
 
     Chassis.resetAll();
-    Chassis.setTargetDistance(1*5, .3);
+    Chassis.setTargetDistance(3, 1);
+    Timer.delay(4);
+    Chassis.turnAngle(90);
   
     
     

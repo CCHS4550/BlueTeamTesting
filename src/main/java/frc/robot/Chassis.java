@@ -179,6 +179,78 @@ public class Chassis implements RobotMap{
         FLMax.disable();
         BLMax.disable();
     }
+    /**
+     * Rotates a given amount of degrees
+     * @param degrees Target amount in degrees
+     * @param proportion Proportion
+     * @param rangeOfError Number of degrees + or - from the target to stop
+     */
+    //double proportion, double rangeOfError, double maxSpd
+    public static void turnAngle(double degrees){
+        double proportion = 0.05;
+        double rangeOfError = 2;
+        // double maxSpd = Chassis.DRIVE_SPD;
+        double maxSpd = 1;
+        // final double proportion = 0.5;
+        // final double rangeOfError = 0.5;
+
+
+        Timer t = new Timer();
+
+        double angleDifference = degrees - getAngle();
+
+        resetAll();
+
+        FRMax.setSpd(0);
+        BRMax.setSpd(0);
+        FLMax.setSpd(0);
+        BLMax.setSpd(0);
+        
+    
+
+        t.reset();
+        t.start();
+        
+        //(angleDifference > rangeOfError || angleDifference < -rangeOfError) && 
+        // while(t.get() < Math.abs(degrees / 9)){
+        while(t.get() < Math.abs(degrees / 18)){
+            //Make negative
+            angleDifference =   degrees - getAngle();
+            FRMax.setSpd(-maxSpd * proportion * angleDifference * 2);
+            BRMax.setSpd(-maxSpd * proportion * angleDifference * 2);
+            FLMax.setSpd(maxSpd * proportion * angleDifference * 0.15);
+            BLMax.setSpd(maxSpd * proportion * angleDifference * 0.15);
+            // System.out.println("angleDifference: "+angleDifference);
+            // System.out.println("Time Get:"+t.get());
+        }
+
+        t.stop();
+
+        // FRMax.setSpd(0);
+        // BRMax.setSpd(0);
+        // FLMax.setSpd(0);
+        // BLMax.setSpd(0);
+
+        // gyro.reset();
+        // gyro.resetDisplacement();
+        // gyro.zeroYaw();
+
+        // System.out.println("Rotated " + degrees +" degrees.");
+        // System.out.println("Gyro angle:" +getAngle());
+        // FRMax.setTarget(tar, controlType);
+        // if(getAngle() - prevAngle == degrees){
+
+        // }
+        
+
+        
+
+        
+        // BLMax.setTarget(-degrees , ControlType.kDutyCycle);
+        // FRMax.setTarget(degrees, ControlType.kDutyCycle);
+        // BRMax.setTarget(degrees, ControlType.kDutyCycle);
+        // FLMax.setTarget(-degrees, ControlType.kDutyCycle);
+    }
     
     public static void turnToAngle(float degree, double maxSpd){
         AHRS ahrs;
@@ -207,4 +279,7 @@ public class Chassis implements RobotMap{
 
         // turnController.setSetpoint(degree);
     }
+
+
+    
 }
